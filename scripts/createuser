@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+
+/etc/init.d/postgresql start
+
+USERNAME=$1
+PASSWORD=$2
+
+CMD="psql --command \"CREATE USER $USERNAME WITH SUPERUSER PASSWORD '$PASSWORD';\""
+
+su postgres -c "$CMD"
+
+/etc/init.d/postgresql stop

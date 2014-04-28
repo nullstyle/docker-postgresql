@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+
+/etc/init.d/postgresql start
+
+ARGS=$@
+
+su postgres -c "createdb $ARGS"
+
+/etc/init.d/postgresql stop

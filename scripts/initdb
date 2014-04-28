@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+
+import os
+import subprocess
+import sys
+from urlparse import urlparse
+
+try:
+  uri = sys.argv[1]
+except IndexError:
+  print('no db uri passed')
+  sys.exit(1)
+
+result          = urlparse(uri)
+pw, host        = result.netloc.split('@')
+user, password  = pw.split(':')
+database        = result.path[1:]
+
+subprocess.call(['/scripts/createuser', user, password])
+subprocess.call(['/scripts/createdb', "-O", user, database])
+
+print("user and database initialized")
